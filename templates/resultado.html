@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Busca</title>
+</head>
+<body>
+    <h1>Resultado da Busca</h1>
+    <h2>Busca em Amplitude</h2>
+    {% if caminho_amplitude %}
+        <p>Caminho encontrado:</p>
+        <ul>
+            {% for ponto in caminho_amplitude %}
+                <li>{{ ponto }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Caminho não encontrado.</p>
+    {% endif %}
+
+    <h2>Busca em Profundidade</h2>
+    {% if caminho_profundidade %}
+        <p>Caminho encontrado:</p>
+        <ul>
+            {% for ponto in caminho_profundidade %}
+                <li>{{ ponto }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Caminho não encontrado.</p>
+    {% endif %}
+</body>
+</html>
+
+
+
+
