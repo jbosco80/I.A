@@ -8,7 +8,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-
 @app.route('/resultado', methods=['POST'])
 def resultado():
     # Carrega o mapa do arquivo
@@ -21,23 +20,28 @@ def resultado():
     origem_y = int(request.form['origem_y'])
     destino_x = int(request.form['destino_x'])
     destino_y = int(request.form['destino_y'])
-
-    # Executa o algoritmo de busca em amplitude
-    sol = bs.busca()
-    caminho_amplitude = sol.amplitude([origem_x, origem_y], [destino_x, destino_y], mapa, dim_x, dim_y)
-    print("\n===> AMPLITUDE:", caminho_amplitude)
-    print("===> Custo do Caminho:", len(caminho_amplitude) - 1) 
     
-    # Executa o algoritmo de busca em profundidade
-    caminho_profundidade = sol.profundidade([origem_x, origem_y], [destino_x, destino_y], mapa, dim_x, dim_y)
-    print("\n*****PROFUNDIDADE*****\n", caminho_profundidade)    
-    print("===> Custo do Caminho:", len(caminho_profundidade) - 1)
+    # Verifica o tipo de busca selecionado
+    tipo_busca = request.form['tipo_busca']
+
+    # Executa o algoritmo de busca correspondente
+    sol = bs.busca()
+    if tipo_busca == 'amplitude':
+        caminho_amplitude = sol.amplitude([origem_x, origem_y], [destino_x, destino_y], mapa, dim_x, dim_y)
+        caminho_profundidade = None  # Define como None para não mostrar na página
+        print("\n===> AMPLITUDE:", caminho_amplitude)
+        print("===> Custo do Caminho:", len(caminho_amplitude) - 1) 
+    elif tipo_busca == 'profundidade':
+        caminho_amplitude = None  # Define como None para não mostrar na página
+        caminho_profundidade = sol.profundidade([origem_x, origem_y], [destino_x, destino_y], mapa, dim_x, dim_y)
+        print("\n*****PROFUNDIDADE*****\n", caminho_profundidade)    
+        print("===> Custo do Caminho:", len(caminho_profundidade) - 1)
     # Renderiza o resultado na página
     return render_template('resultado.html', caminho_amplitude=caminho_amplitude, caminho_profundidade=caminho_profundidade)
 
-
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
